@@ -77,15 +77,18 @@ test('test ReadError', test => {
 
   test.equal(error.name, 'ReadError')
   test.ok(isString(error.stack))
+  test.ok(isString(error.message))
 
   test.end()
 })
 
 test('test WriteError', test => {
-  const error = new Channel.ReadError()
+  const error = new Channel.WriteError(42)
 
-  test.equal(error.name, 'ReadError')
+  test.equal(error.payload, 42)
+  test.equal(error.name, 'WriteError')
   test.ok(isString(error.stack))
+  test.ok(isString(error.message))
 
   test.end()
 })

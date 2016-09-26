@@ -1,11 +1,13 @@
 /* @flow */
 
-import Buffer from './Buffer'
-import type {ReadError, WriteError} from './Buffer'
+import {ReadError, WriteError, Buffer} from './Buffer'
 
-class DroppingBuffer <data> extends Buffer <data> {
+
+export class DroppingBuffer <data> extends Buffer <data> {
   size: number
   chunks: Array<data>
+  static ReadError = ReadError
+  static WriteError = WriteError
   constructor (size:number) {
     super()
     this.size = size
@@ -25,4 +27,6 @@ class DroppingBuffer <data> extends Buffer <data> {
     }
   }
 }
-exports.DroppingBuffer = DroppingBuffer
+
+export default DroppingBuffer
+export {ReadError, WriteError}

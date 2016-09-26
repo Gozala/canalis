@@ -1,11 +1,12 @@
 /* @flow */
 
-import Buffer from './Buffer'
-import type {ReadError, WriteError} from './Buffer'
+import {ReadError, WriteError, Buffer} from './Buffer'
 
 export class SlidingBuffer <data> extends Buffer <data> {
   size: number
   chunks: Array<data>
+  static ReadError = ReadError
+  static WriteError = WriteError
   constructor (size:number) {
     super()
     this.size = size
@@ -28,3 +29,4 @@ export class SlidingBuffer <data> extends Buffer <data> {
 }
 
 export default SlidingBuffer
+export {ReadError, WriteError}

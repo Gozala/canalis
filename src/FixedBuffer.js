@@ -1,11 +1,12 @@
 /* @flow */
 
-import Buffer from './Buffer'
-import type {ReadError, WriteError} from './Buffer'
+import {Buffer, ReadError, WriteError} from './Buffer'
 
 export class FixedBuffer <value> extends Buffer <value> {
   size: number
   chunks: Array<value>
+  static ReadError = ReadError
+  static WriteError = WriteError
   constructor (size:number) {
     super()
     this.size = size
@@ -29,3 +30,4 @@ export class FixedBuffer <value> extends Buffer <value> {
 }
 
 export default FixedBuffer
+export {ReadError, WriteError}

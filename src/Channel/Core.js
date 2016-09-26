@@ -60,9 +60,9 @@ export class WriteError <message> {
   stack: string
   message = 'Failed to write into channel. This means channel is closed.'
   name = 'WriteError'
-  constructor (payload:message, stack:string=new Error().stack) {
+  constructor (payload:message) {
     this.payload = payload
-    this.stack = stack
+    this.stack = new Error().stack
   }
 }
 
@@ -70,7 +70,7 @@ export class ReadError {
   name = 'ReadError'
   message = 'Failed to read from channel. This means channel is closed buffered data is exhasted.'
   stack: string
-  constructor(stack:string=new Error().stack) {
-    this.stack = stack
+  constructor() {
+    this.stack = new Error().stack
   }
 }

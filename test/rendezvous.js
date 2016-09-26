@@ -143,9 +143,7 @@ test('test write -> close -> read', test => {
         infer(channel.write({message: 'Hi'}), onWriteSucceed, onWriteFail).map(_ => null),
         infer(channel.close(), onCloseSucceed, onCloseFail).map(_ => null),
         infer(channel.write({message: 'Bye'}), onWriteSucceed, onWriteFail).spawn().map(_ => null),
-      ])
-    )
+      ]))
     .map(_ => null)
     .fork(onSucceed, onFail)
-
 })

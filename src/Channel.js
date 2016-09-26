@@ -48,13 +48,14 @@ class Read <message> extends Task <ReadError, message> {
   execute (succeed:(a:message) => void, fail:(x:ReadError) => void):?PendingRead<message> {
     const {pipe} = this
     const {buffer, closed, writeQueue} = pipe
-    enqueue(pipe)
     let chunk = buffer.read()
     if (chunk instanceof Buffer.ReadError) {
       const pendingRead = new PendingRead(succeed, fail, false)
       pipe.readQueue.push(pendingRead)
+      enqueue(pipe)
       return pendingRead
     } else {
+      enqueue(pipe)
       succeed(chunk)
     }
   }
@@ -76,9 +77,6 @@ class Write <message> extends Task <WriteError<message>, void> {
   execute (succeed:(a:void) => void, fail:(x:WriteError<message>) => void):?PendingWrite<message> {
     const {pipe, payload} = this
     const {buffer, closed, readQueue} = pipe
-    // Wake up pipe if it is parked.
-    enqueue(pipe)
-
     // If pipe is closed or buffer is full, create a pending write. This will
     // gives us following guarantees:
     // - Writing to colsed channel fails on next tick.
@@ -86,9 +84,11 @@ class Write <message> extends Task <WriteError<message>, void> {
     if (closed || buffer.write(payload) instanceof Buffer.WriteError) {
       const pendingWrite = new PendingWrite(succeed, fail, payload, false)
       pipe.writeQueue.push(pendingWrite)
+      enqueue(pipe)
       return pendingWrite
     // If write to buffer was successful succeed without blocking.
     } else {
+      enqueue(pipe)
       succeed()
     }
   }
@@ -107,8 +107,8 @@ class Close <never, message> extends Task <never, void> {
   }
   execute (succeed:(a:void) => void, fail:(x:never) => void):void {
     const {pipe} = this
-    enqueue(pipe)
     pipe.closed = true
+    enqueue(pipe)
     succeed()
   }
 }
