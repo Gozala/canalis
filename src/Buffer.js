@@ -3,8 +3,8 @@
 export class ReadError {
   message: string
   stack: string
-  name = "ReadError"
-  constructor(message:string) {
+  name = 'ReadError'
+  constructor (message:string) {
     this.message = message
     this.stack = new Error(message).stack
   }
@@ -13,8 +13,8 @@ export class ReadError {
 export class WriteError {
   message: string
   stack: string
-  name = "WriteError"
-  constructor(message:string) {
+  name = 'WriteError'
+  constructor (message:string) {
     this.message = message
     this.stack = new Error(message).stack
   }

@@ -2,7 +2,6 @@
 
 import {ReadError, WriteError, Buffer} from './Buffer'
 
-
 export class DroppingBuffer <data> extends Buffer <data> {
   size: number
   chunks: Array<data>

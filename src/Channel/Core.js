@@ -54,7 +54,6 @@ export class PendingRead <message> {
   }
 }
 
-
 export class WriteError <message> {
   payload: message
   stack: string
@@ -70,7 +69,7 @@ export class ReadError {
   name = 'ReadError'
   message = 'Failed to read from channel. This means channel is closed buffered data is exhasted.'
   stack: string
-  constructor() {
+  constructor () {
     this.stack = new Error().stack
   }
 }
